@@ -1,4 +1,4 @@
-<h1> Park-NET - identifying Urban parks using multi source spatial data and Geo-AI </h1>
+<h1> Park-NET: identifying Urban parks using multi source spatial data and Geo-AI </h1>
 
 <h3> 0_create_image_chips_save_numpy_array_github.ipynb </h3> 
 This file takes sattelite image and park raster and creates chips (with patchify library) and saves them as numpy arrays to google drive.
