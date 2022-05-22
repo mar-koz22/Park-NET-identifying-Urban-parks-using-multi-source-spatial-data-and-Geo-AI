@@ -1,7 +1,10 @@
+# import libraries
 import os
 import rasterio
 import numpy as np
 from osgeo import gdal
+from PIL import Image
+from patchify import patchify
 
 
 def read_file(dir, city, image_file_name, park_file_name):
@@ -14,66 +17,64 @@ def read_file(dir, city, image_file_name, park_file_name):
     image = gdal.Open(image_file_path)
     image_array = image.ReadAsArray()
     image_array = np.transpose(image_array, [1, 2, 0])  # transpose the first and third axis
-    image_array[np.isnan(image_array)] = 0  # replace nan with 0
 
     # read park file
     park_file_path = os.path.join(dir, city, park_file_name)
     park = gdal.Open(park_file_path)
     park_array = park.ReadAsArray()
     park_array = np.expand_dims(park_array, axis=2)  # expand from 2D to 3D
-    park_array[np.isnan(park_array)] = 0  # replace nan with 0
-    park_array[park_array > 1] = 1  # repalce values greater than 1 with 1
 
     return image_array, park_array
 
 
-from PIL import Image
-from patchify import patchify
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+
+def normalize_by_layer(image_array):
+  '''
+  Function to normalize image data to the same max(1) and min(0)
+  Since different layers have different scales, normalization will be done layer by layer
+  '''
+  for i in range(image_array.shape[2]):
+    layer_min = np.min(image_array[:, :, i])
+    layer_max = np.max(image_array[:, :, i])
+    image_array[:, :, i] = (image_array[:, :, i] - layer_min)/(layer_max - layer_min)
+  return image_array
+
+
 
 
 # define a function to crop images and corresponding masks into proper size
 def create_chips(image_file, park_file, patch_size, step):
-    '''
-    This function creates chips for satellite image and corresponding masks
-    Input  - image_file: np.array of satellite image
-           - park_file: np.array of mask
-           - patch_size: size of output chips
-           - step: stride when cropping
-    Output - one np.array for chips of satellite image, another one for mask
-    '''
+  '''
+  This function creates chips for satellite image and corresponding masks
+  Input  - image_file: np.array of satellite image
+         - park_file: np.array of mask
+         - patch_size: size of output chips
+         - step: stride when cropping
+  Output - one np.array for chips of satellite image, another one for mask
+  '''
+  
+  # crop image_file
+  image_dataset = []
+  park_dataset = []
+  patches_img = patchify(image_file, (patch_size, patch_size, image_file.shape[2]), step=step)  
+  patches_prk = patchify(park_file, (patch_size, patch_size, park_file.shape[2]), step=step)
+  
+  for i in range(patches_img.shape[0]):
+    for j in range(patches_img.shape[1]):
+      single_patch_img = patches_img[i,j,:,:]   
+      single_patch_img = single_patch_img[0] # Drop the extra unecessary dimension that patchify adds. 
+      
+      single_patch_prk = patches_prk[i,j,:,:]   
+      single_patch_prk = single_patch_prk[0]
+      
+      image_dataset.append(single_patch_img)
+      park_dataset.append(single_patch_prk)
+  
+  image_dataset = np.array(image_dataset)
+  park_dataset = np.array(park_dataset)
 
-    scaler = MinMaxScaler()  # scale to the min = 0, and max = 1
+  return image_dataset, park_dataset
 
-    # crop image_file
-    image_dataset = []
-    patches_img = patchify(image_file, (patch_size, patch_size, image_file.shape[2]), step=step)
-
-    for i in range(patches_img.shape[0]):
-        for j in range(patches_img.shape[1]):
-            single_patch_img = patches_img[i, j, :, :]
-            # scale to min = 0, max = 1
-            single_patch_img = scaler.fit_transform(single_patch_img.reshape(-1, single_patch_img.shape[-1])).reshape(
-                single_patch_img.shape)
-            single_patch_img = single_patch_img[0]  # Drop the extra unecessary dimension that patchify adds.
-            image_dataset.append(single_patch_img)
-    image_dataset = np.array(image_dataset)
-
-    # cropping park_file
-    park_dataset = []
-    patches_img = patchify(park_file, (patch_size, patch_size, park_file.shape[2]), step=step)
-
-    for i in range(patches_img.shape[0]):
-        for j in range(patches_img.shape[1]):
-            single_patch_img = patches_img[i, j, :, :]
-            # scale to min = 0, max = 1
-            single_patch_img = scaler.fit_transform(single_patch_img.reshape(-1, single_patch_img.shape[-1])).reshape(
-                single_patch_img.shape)
-            single_patch_img = single_patch_img[0]  # Drop the extra unnecessary dimension that patchify adds.
-            park_dataset.append(single_patch_img)
-    park_dataset = np.array(park_dataset)
-
-    return image_dataset, park_dataset
 
 
 def remove_images(image_dataset, park_dataset, threshold):
