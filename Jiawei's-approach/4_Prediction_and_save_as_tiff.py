@@ -1,3 +1,6 @@
+# In this file, we make predictions on single image chip using model trained, and merge the predicted chips together into a tiff file
+
+# import libraries
 from patchify import patchify, unpatchify
 from keras.models import load_model
 import tensorflow
