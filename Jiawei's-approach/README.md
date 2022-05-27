@@ -7,26 +7,37 @@ The main workflow of this project is,
 
 * Third, model training and evaluation. In this step, different models and parameters (e.g., image size, combinations of bands) were tested (both on validation set and unseen dataset).
 
-## 0_U-net_model
+## 1_Data_preparation
+Import satellite images have totally nine bands and indices, which are R, G, B, NIR, NDVI, NDBI, NDWI, land surface temperature, land cover. Create chips for satellite images and masks, remove chips with high proportion of backgrounds (over 80%) to get balanced training data. Example is shown as
+
+<img src="https://user-images.githubusercontent.com/97944674/170721870-a8c1c3a8-2df7-417d-890e-b0bf75c3c1ba.png" width="530" height="220">
+
+## 2_Data_augmentation
+The python library used was ImageDataGenerator, with augmentation techniques of rotation, shift, flip, etc., with fill model of "reflect". Example is shown as
+
+<img src="https://user-images.githubusercontent.com/97944674/170722580-d01421e3-9c0f-415c-a8cd-22db08122ece.png" width="550" height="230">
+
+## 3_Model_UNet
+When training the model on San Francisco, Seattle, Philadelphia, the overall accuracy of this model is 0.93, IoU is 0.75, F1 score is 0.732. When tesing on a new city -- Denver, the overall accuracy is 0.78, IoU is 0.41, F1 score is 0.33.
+
+## 3_Model_ResUNet
+Compared with U-Net model from scrath, a pretrained backbone can increase model performace and make the training converge faster. A ResNet50 backbone is used as the encoder part of U-Net model. As the backbone only accepts three-channel images (otherwise you cannot make use of the pretrained weights or you need to reshape your images into 3-channel), three bands were chosen. Here is the example for bands NDVI, NDWI, and land cover
+
+<img src="https://user-images.githubusercontent.com/97944674/170723410-286e18b8-d712-4de5-ae08-51c123dc5603.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170723518-51163bdb-7250-4edb-b6c4-2ccdbf224274.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170723919-6e904af2-9a3b-47db-a3a1-49ad34774c41.png" width="300" height="200">
+
+When training on San Francisco, Denver, Philadelphia, Ghent, and Amsterdam, the model has a overall accuracy of 0.96, IoU of 0.87, F1 score of 0.93. When testing the model in an external city -- Seattle, the overall accuracy is 0.92, IoU of 0.64, F1 socre of 0.75.
+
+## 3_Model_BigEarthNet
 (IN PROGRESS)
 
-## 1_U-net_ResNet_backbone
-A ResNet34 backbone is used as the encoder part of U-Net model. As the backbone only accepts three-channel images (otherwise you cannot make use of the pretrained weights or you need to reshape your images into 3-channel), three bands were chosen among all the 8 bands. Different combinations were tested.
-### Land surface temperature (LST) + NDVI + land cover using 256\*256 image chips
-The model was training on San Francisco, Seattle, and Denver, training history is plotted below:
+## 4_Prediction_and_save_as_tiff
+To make predictions on external satellite images and save the prediction to a tiff file to visualize in GIS applications. In this file, predictions were made for each image chip, and then predicted chips were merged together to a numpy array. This numpy array then was converted into tiff file using given metadata.
 
-<img src="https://user-images.githubusercontent.com/97944674/168816303-b124de7f-252a-4758-93f3-7c99a4d7937b.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/168817375-9b5a8ce3-6b56-4033-8c4d-85d685ba472b.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/168817858-ff956bc0-b040-430d-8430-5db0e2b23bd8.png" width="300" height="200">
+## 5_Multi_city_solution_with_GEE
+If you are training model on multiple cities, you can use Google Earth Engine to automatically download satellite images, automatically crop satellite images into chips, and create corresponding chips for masks.
 
-The overall accuracy of this model is 0.965, with IoU 0.912, F1 score 0.953, AUC 0.950. When testing on a new city, Philadelphia, the overall accuracy of this model is 0.829, with IoU 0.619, F1 score 0.745, AUC 0.746. Some random images were tested:
+Reference: 
 
-<img src="https://user-images.githubusercontent.com/97944674/168819399-d7701385-ebda-47de-baf5-bac039d13462.png" width="800" height="250">
+https://github.com/bnsreenu/python_for_microscopists
 
-### NDBI + NDVI + land cover using 256\*256 image chips
-The model was training on San Francisco, Seattle, and Denver, training history is plotted below:
-
-<img src="https://user-images.githubusercontent.com/97944674/168837656-5d646c44-552d-480e-b851-e26b0bf4a936.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/168837851-5f92281c-5d31-4927-b42b-d64f3e8d753d.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/168838168-f537d36d-fe32-44d1-a646-8385b6326a5f.png" width="300" height="200">
-
-The overall accuracy of this model is 0.929, with IoU 0.843, F1 score 0.913, AUC 0.913. When testing on a new city, Philadelphia, the overall accuracy of this model is 0.814, with IoU 0.603, F1 score 0.732, AUC 0.743. Some random images were tested:
-
-  <img src="https://user-images.githubusercontent.com/97944674/168838844-970b52c7-ec09-44ed-8e2c-0f933e0605ba.png" width="800" height="250">
-
+https://geemap.org/notebooks/96_image_chips/
