@@ -23,9 +23,12 @@ When training the model on San Francisco, Seattle, Philadelphia, the overall acc
 ## 3_Model_ResUNet
 Compared with U-Net model from scrath, a pretrained backbone can increase model performace and make the training converge faster. A ResNet50 backbone is used as the encoder part of U-Net model. As the backbone only accepts three-channel images (otherwise you cannot make use of the pretrained weights or you need to reshape your images into 3-channel), three bands were chosen. Here is the example for bands NDVI, NDWI, and land cover
 
-<img src="https://user-images.githubusercontent.com/97944674/170723410-286e18b8-d712-4de5-ae08-51c123dc5603.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170723518-51163bdb-7250-4edb-b6c4-2ccdbf224274.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170723919-6e904af2-9a3b-47db-a3a1-49ad34774c41.png" width="300" height="200">
+<img src="https://user-images.githubusercontent.com/97944674/170857546-eed7d2bb-2d4c-47bd-a908-abca6a79cc84.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170857566-e5a90ee2-dffa-411e-9073-d5add2bbae99.png" width="300" height="200"><img src="https://user-images.githubusercontent.com/97944674/170857586-d774259a-f6a6-4094-a7df-aea94c2e043d.png" width="300" height="200">
 
-When training on San Francisco, Denver, Philadelphia, Ghent, and Amsterdam, the model has a overall accuracy of 0.96, IoU of 0.87, F1 score of 0.93. When testing the model in an external city -- Seattle, the overall accuracy is 0.92, IoU of 0.64, F1 socre of 0.75.
+When training on San Francisco, Denver, Seattle, Ghent, Greater Manchester, Dhaka, Dublin, and Amsterdam, the model has a overall accuracy of 0.94, IoU of 0.82, F1 score of 0.90. When testing the model in an external city -- Philadelphia, the overall accuracy is 0.90, IoU of 0.63, F1 socre of 0.74.
+
+<img src="https://user-images.githubusercontent.com/97944674/170857470-a8f046b6-3ffe-4dfe-b1db-c7b4c1deced3.png" width="600" height="260">
+
 
 ## 3_Model_BigEarthNet
 (IN PROGRESS)
@@ -37,6 +40,8 @@ To make predictions on external satellite images and save the prediction to a ti
 If you are training model on multiple cities, you can use Google Earth Engine to automatically download satellite images, automatically crop satellite images into chips, and create corresponding chips for masks.
 
 Reference: 
+
+https://segmentation-models.readthedocs.io/en/latest/api.html#unet
 
 https://github.com/bnsreenu/python_for_microscopists
 
