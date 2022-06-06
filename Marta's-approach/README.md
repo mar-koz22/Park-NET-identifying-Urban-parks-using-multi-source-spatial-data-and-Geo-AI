@@ -20,11 +20,11 @@ The first approach is in UNet_implemented folder, and the second one is in UNet_
 The second one gave better results, so it will be explained here.
 
 
-<h2>Transfer learning approach - U-Net with Resnet50 architecture <h2>
+<h2>Transfer learning approach - U-Net with Resnet50 architecture </h2>
  
 This approach is in UNet_with_Resnet_backbone folder, and here is explanation of what exactly is done in each file that you can find there.
 
-<h3> 0_create_image_chips_save_numpy_array_github.ipynb </h3> 
+<h3> 0b_create_image_chips_save_numpy_array_github.ipynb </h3> 
 This file imports sattelite image, that have 10 bands in total - B, G, R, NIR, SWIR, NDVI, NDBI, NDWI, VARI, land_cover, and park raster. It creates image chips (with patchify library) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 95-80%) to get balanced training data. 
  
 Input - sattelite image and raster with parks:
@@ -36,9 +36,19 @@ Output - image patches (saved as numpy arrays):
 ![image](https://user-images.githubusercontent.com/79871387/168479179-0e84e309-38f9-4c04-b750-185401792654.png)
 
 
-<h3> 1_UNet_train_model_github.ipynb </h3>
+<h3> 1b_UNet_train_model_github.ipynb </h3>
 (still in progress)
-load numpy arrays with images chips from the google drive and train UNet model on them
-<h3> 2_new_city_external_validation_github.ipynb </h3>
+This file is training the prediction model. It starts with reading image and mask chips from different cities - currently Amsterdam, Dublin, Ghent, Manchester, Seattle and San Francisco with image chips that have no less then 10% of parks. This image chips have 3 bands - Ndvi, Landcover, Ndwi. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
+
+Next step is training the model. For now the best accuracy was achieved using ResNet50 backbone, 50 epochs, and including chips that have no less then 10% of park. 
+
+![image](https://user-images.githubusercontent.com/79871387/172175542-9455bb59-2ecb-4bc7-8b08-5e6e97f375b9.png)
+
+When training on Amsterdam, Dublin, Ghent, Manchester, Seattle and San Francisco, the model has a overall accuracy of 0.96, IoU of 0.87.
+
+![image](https://user-images.githubusercontent.com/79871387/172175945-aa16cbf6-1e67-44cd-a4ba-3dc10e95ff1d.png)
+
+
+<h3> 2b_new_city_external_validation_github.ipynb </h3>
 (still in progress)
-validate model on a new, unseen city
+
