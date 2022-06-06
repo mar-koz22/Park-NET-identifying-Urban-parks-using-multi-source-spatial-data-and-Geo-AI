@@ -21,10 +21,12 @@ The second one gave better results, so it will be explained here.
 
 
 <h2>Transfer learning approach - U-Net with Resnet50 architecture <h2>
-
+ 
+This approach is in UNet_with_Resnet_backbone folder, and here is explanation of what exactly is done in each file that you can find there.
 
 <h3> 0_create_image_chips_save_numpy_array_github.ipynb </h3> 
-This file takes sattelite image and park raster and creates chips (with patchify library) and saves them as numpy arrays to google drive.
+This file imports sattelite image, that have 10 bands in total - B, G, R, NIR, SWIR, NDVI, NDBI, NDWI, VARI, land_cover, and park raster. It creates image chips (with patchify library) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 95-80%) to get balanced training data. 
+ 
 Input - sattelite image and raster with parks:
 
 ![image](https://user-images.githubusercontent.com/79871387/168478919-4290f769-7580-440b-be7f-c7b30a6f8901.png)
