@@ -52,3 +52,7 @@ When training on Amsterdam, Dublin, Ghent, Manchester, Seattle and San Francisco
 <h3> 2b_new_city_external_validation_github.ipynb </h3>
 (still in progress)
 
+This file is checking the accuracy on external data. Here city of Philadephia was used, because it wasn't part of the trining process. Sattelite image and mask is loaded,and chips are created. Parks are predicted, and the accuracy of the prediction in 0.87, and IOU is 0.59.
+
+![image](https://user-images.githubusercontent.com/79871387/172181598-df2aec14-3c43-4b63-b3ec-a7ed9a0ddcf1.png)
+
