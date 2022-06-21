@@ -64,8 +64,7 @@ def array2raster(newRasterfn,rasterOrigin,pixelWidth,pixelHeight,array):
     outband.FlushCache()
 
 def main(newRasterfn,rasterOrigin,pixelWidth,pixelHeight,array):
-    reversed_arr = array[::-1] # reverse array so the tif looks like the array
-    array2raster(newRasterfn, rasterOrigin, pixelWidth, pixelHeight, reversed_arr) # convert array to raster
+    array2raster(newRasterfn, rasterOrigin, pixelWidth, pixelHeight, array) # convert array to raster
 
 # get metadata of original image
 image = gdal.Open('file_path')
