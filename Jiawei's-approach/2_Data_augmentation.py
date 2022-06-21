@@ -4,26 +4,25 @@
 seed=24
 from keras.preprocessing.image import ImageDataGenerator
 
-img_data_gen_args = dict(rotation_range=20,
-                         width_shift_range=0.1,
-                         height_shift_range=0.1,
-                         shear_range=0.1,
+img_data_gen_args = dict(rotation_range=45,
+                         width_shift_range=0.2,
+                         height_shift_range=0.2,
+                         zoom_range=0.2, 
                          horizontal_flip=True,
                          vertical_flip=True,
-                         fill_mode='reflect',
-                         preprocessing_function = preprocess_input)
+                         fill_mode='reflect')
 
-mask_data_gen_args = dict(rotation_range=20,
-                          width_shift_range=0.1,
-                          height_shift_range=0.1,
-                          shear_range=0.1,
+mask_data_gen_args = dict(rotation_range=45,
+                          width_shift_range=0.2,
+                          height_shift_range=0.2,
+                          zoom_range=0.2, 
                           horizontal_flip=True,
                           vertical_flip=True,
                           fill_mode='reflect',
                           preprocessing_function = lambda x: np.where(x > 0, 1, 0).astype(x.dtype))
 
 # set the batch size of image generator
-batch_size = 8
+batch_size = 16
 
 # image generator (on X_train and X_test)
 image_data_generator = ImageDataGenerator(**img_data_gen_args)
