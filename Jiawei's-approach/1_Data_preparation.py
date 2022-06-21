@@ -13,13 +13,13 @@ def read_file(dir, city, image_file_name, park_file_name):
     '''
 
     # read image file
-    image_file_path = os.path.join(dir, city, image_file_name)
+    image_file_path = os.path.join(dir, city, image_file_name)  # file path is organized as dir/city/image_file_name
     image = gdal.Open(image_file_path)
     image_array = image.ReadAsArray()
     image_array = np.transpose(image_array, [1, 2, 0])  # transpose the first and third axis
 
     # read park file
-    park_file_path = os.path.join(dir, city, park_file_name)
+    park_file_path = os.path.join(dir, city, park_file_name)  # file path is organized as dir/city/park_file_name
     park = gdal.Open(park_file_path)
     park_array = park.ReadAsArray()
     park_array = np.expand_dims(park_array, axis=2)  # expand from 2D to 3D
