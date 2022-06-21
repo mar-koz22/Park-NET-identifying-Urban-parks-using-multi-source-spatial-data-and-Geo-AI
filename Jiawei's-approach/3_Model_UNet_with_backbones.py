@@ -1,4 +1,4 @@
-# build model (U-Net with resnet34 backbone, pretrained on imagenet)
+# build model (U-Net with resnet50 backbone, pretrained on imagenet)
 import segmentation_models as sm
 import keras
 import tensorflow
@@ -15,7 +15,7 @@ loss = sm.losses.binary_focal_dice_loss
 metrics = ['accuracy', sm.metrics.IOUScore(threshold=0.5), sm.metrics.FScore(threshold=0.5)]
 
 # set BACKBONE
-BACKBONE = 'resnet34'  # other backbones can be used here, e.g., vgg16
+BACKBONE = 'resnet50'  # other backbones can be used here, e.g., vgg16
 
 # preprocess X_train and y_train to fit the model architecture
 preprocess_input = sm.get_preprocessing(BACKBONE) # get the preprocessing function
