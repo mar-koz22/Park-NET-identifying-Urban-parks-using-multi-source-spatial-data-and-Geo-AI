@@ -49,7 +49,7 @@ Compared with U-Net model from scrath, a pretrained backbone can increase model 
 | NDVI-NDBI-landcover  | 0.9656   | 0.9100 | 0.9522  | 0.9536 | 0.2468    | 0.1222 | 0.1961  | 0.5000	 |
 | Average              | 0.9695   | 0.9188 | 0.9572  | 0.9584 | 0.5139    | 0.2515 | 0.3303  | 0.4972	 |
 
-ResNet-50 backbone added much benefit to the model, while VGG-16 made the model perform worse. The converge histories of the three models are plotted below. ResNet-50 helps the training converge faster, however VGG-16 has difficulty to converge within the epochs.
+ResNet-50 backbone added much benefit to the model, while VGG-16 made the model perform worse. The converge histories of the three models are plotted below. ResNet-50 helps the training converge faster, however VGG-16 has difficulty to converge within the 50 epochs.
 
 <img src="https://user-images.githubusercontent.com/97944674/174849350-31f35765-8955-4abc-87d4-c12088f73068.png" width="700" height="370">
 
@@ -62,6 +62,8 @@ Python scripts to do this are documented in [4_Prediction_and_save_as_tiff](http
 
 ## Multi cities solution
 If you are training model on multiple cities, you can use Google Earth Engine to automatically download satellite images, automatically crop satellite images into chips, and create corresponding chips for masks. Main packages used were `ee` and `gdal`, with scripts shown in [5_Multi_city_solution _with _GEE](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Jiawei's-approach/5_Multi_city_solution_with_GEE.py)
+
+Examples of the whole training process are shown in the folder of [Notebook](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/tree/main/Jiawei's-approach/Notebook).
 
 Reference: 
 
