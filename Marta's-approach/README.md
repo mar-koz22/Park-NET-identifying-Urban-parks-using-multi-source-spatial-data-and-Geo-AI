@@ -32,7 +32,7 @@ Because litearature suggest this approach, and the pre-trained can take 3 bands 
 </ul>
 
 The full methodological workflow:
-![project workflow (2)](https://user-images.githubusercontent.com/79871387/175558186-2383e3d5-1c83-4bb3-ace9-f06686488143.jpg)
+<img src="https://user-images.githubusercontent.com/79871387/175558186-2383e3d5-1c83-4bb3-ace9-f06686488143.jpg">
 
 This process was mainly done in Google Clab Pro, and scripts are descibed here:
 
@@ -42,11 +42,11 @@ This process was mainly done in Google Clab Pro, and scripts are descibed here:
  
 Input - sattelite image and raster with parks:
 
-![image](https://user-images.githubusercontent.com/79871387/168478919-4290f769-7580-440b-be7f-c7b30a6f8901.png)
+<img src="https://user-images.githubusercontent.com/79871387/168478919-4290f769-7580-440b-be7f-c7b30a6f8901.png" width="650">
 
 Output - image patches (saved as numpy arrays):
 
-![image](https://user-images.githubusercontent.com/79871387/168479179-0e84e309-38f9-4c04-b750-185401792654.png)
+<img src="https://user-images.githubusercontent.com/79871387/168479179-0e84e309-38f9-4c04-b750-185401792654.png" width="700">
 
 <h2>Transfer learning approach - U-Net with ResNet34 architecture </h2>
 
@@ -55,8 +55,8 @@ Output - image patches (saved as numpy arrays):
 [1b_UNet_train_model_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/1b_UNet_parks_with_a_backbone_github.ipynb) file is training the prediction model. It starts with reading image and mask chips from 10 different cities from one of the 9 three-band compositions. Cities that were included in the training process are Amsterdam, Buffalo, Dhaka, Dublin, Ghent, London, Manchester, Philadelphia, Seattle, Vancouver. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
 
 Data augumentation examples:
-![image](https://user-images.githubusercontent.com/79871387/175539657-ae314c94-7006-4458-bf3a-6f9d1b088832.png)
 
+<img src="https://user-images.githubusercontent.com/79871387/175539657-ae314c94-7006-4458-bf3a-6f9d1b088832.png" width="700">
 
 Next step is training the model. Pre-trained model was implemented from [Segmentations Models](https://github.com/qubvel/segmentation_models) library.
 
@@ -74,6 +74,6 @@ Next step is training the model. Pre-trained model was implemented from [Segment
 <h3> Training process </h3>
 Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly..
 
-![Obraz1](https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png)
+<img src="https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png" width="650">
 
 All results were calculated based on two external cities - Washington and Tel Aviv.
