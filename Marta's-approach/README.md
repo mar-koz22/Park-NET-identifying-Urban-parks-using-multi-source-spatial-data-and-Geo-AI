@@ -33,15 +33,12 @@ Because litearature suggest this approach, and the pre-trained can take 3 bands 
 
 So this study created 18 models - 2 models architectures and 9 band compositions.
  
-The first approach is in [UNet_implemented](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/tree/main/Marta's-approach/UNet_implemented) folder, and the second one is in [UNet_with_Resnet_backbone](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/tree/main/Marta's-approach/UNet_with_Resnet_backbone) folder.
-The second one gave better results, so it will be explained here.
 
+<h2>Model setup </h2>
 
-<h2>Transfer learning approach - U-Net with ResNet34 architecture </h2>
+<h3> 0_create_image_chips_save_numpy_array_github.ipynb </h3> 
 
-<h3> 0b_create_image_chips_save_numpy_array_github.ipynb </h3> 
-
-[0b_create_image_chips_save_numpy_array_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/0b_create_image_chips_save_numpy_array_github.ipynb) file imports sattelite image, that have 8 bands in total - B, G, R, NIR, NDVI, NDBI, NDWI, land_cover, and park raster. It creates image chips with [Patchify library](https://pypi.org/project/patchify/) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 90%) to get balanced training data. 
+[0_create_image_chips_save_numpy_array_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/0_create_image_chips.ipynb) file imports sattelite image, that have 8 bands in total - B, G, R, NIR, NDVI, NDBI, NDWI, land_cover, and park raster. It creates image chips with [Patchify library](https://pypi.org/project/patchify/) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 90%) to get balanced training data. 
  
 Input - sattelite image and raster with parks:
 
@@ -51,8 +48,10 @@ Output - image patches (saved as numpy arrays):
 
 ![image](https://user-images.githubusercontent.com/79871387/168479179-0e84e309-38f9-4c04-b750-185401792654.png)
 
+<h2>Transfer learning approach - U-Net with ResNet34 architecture </h2>
 
 <h3> 1b_UNet_train_model_github.ipynb </h3>
+
 [1b_UNet_train_model_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/1b_UNet_parks_with_a_backbone_github.ipynb) file is training the prediction model. It starts with reading image and mask chips from 10 different cities from one of the 9 three-band compositions. Cities that were included in the training process are Amsterdam, Buffalo, Dhaka, Dublin, Ghent, London, Manchester, Philadelphia, Seattle, Vancouver. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
 
 Data augumentation examples:
