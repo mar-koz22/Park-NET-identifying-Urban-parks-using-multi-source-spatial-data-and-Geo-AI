@@ -1,31 +1,47 @@
-<h1> Park-NET: identifying Urban parks using multi-source spatial data and Geo-AI </h1>
+<h1> PPark-NET: Identifying Public Urban Green Spaces Using Multi-Source Spatial Data and Convolutional Networks </h1>
  
 <b>The aim of this project is to analyse to what extent can a reproducible CNN model that predicts urban greenspace based on open source data be created.</b> 
  
 The workflow of this project is:
 <ul>
 <li>data gathering and pre-processing - getting Sentinel satellite images from Earthexplorer, and parks data. Using QGIS to prepare, e.g calculate indices clipping satellite images to city extent, rasterizing park data. </li>
-<li>data preparation and augmentation - importing satellite images and corresponding masks (the ground truth for where are parks and where are not), creating chips and balancing data. Balancing was done by deleting chips that have fewer park pixels than the given threshold (e.g. less than 5-20&) Then data augmentation to expand the image dataset. </li>
+<li>data preparation and augmentation - importing satellite images and corresponding masks (the ground truth for where are parks and where are not), creating chips and balancing data. Balancing was done by deleting chips that have fewer park pixels than the given threshold (e.g. less than 5-20%) Then data augmentation to expand the image dataset. </li>
 <li>model training - different models and parameters (e.g. threshold of deleting chips, the stride of the chips, different bands combination) were tested. </li>
 <li>evaluation - few cities were left out of the training process to be used as an external validation to access the model accuracy on unseen data.</li>
 </ul>
   
 I've tried two approaches to solve this:
 <ul>
-<li> writing U'Net model from scratch, and training it on as many layers as possible. The advantages here are: the model is more understandable and customizable - one can easily add another dropout layer, or change its proportion. Sadly the results are mediocre. </li>
-<li> using transfer learning approach, and using pre-trained U-Net with Resnet backbone. This approach is closer to a Black-box approach - one can't edit the model parameters, but it has a backbone that has weights trained on the 2012 ILSVRC ImageNet dataset. The limitation is here that only 3 bands can be used.
+<li> writing U-Net model from scratch. The advantages here are: the model is more understandable and customizable - one can easily add another dropout layer, or change its proportion. Sadly the results are mediocre. </li>
+<li> using transfer learning approach, and using pre-trained U-Net with Resnet backbone. This approach is closer to a Black-box approach - one can't edit the model parameters, but it has a backbone that has weights trained on the 2012 ILSVRC ImageNet dataset. The limitation is here that only 3 bands can be used. Pre-trained model was implemented from [Segmentations Models](https://github.com/qubvel/segmentation_models) library.
 </ul>
+
+So those were the the model archcitectures that this study evaluated.
+
+Because litearature suggest this approach, and the pre-trained can take 3 bands 9 three-band compositions were choosen:
+<ul>
+<li>Blue, Green, Red </li>
+<li>Green, Red, NIR</li>
+<li>Red, NIR, NDVI</li>
+<li>NDVI, NDBI, Landcover</li>
+<li>Red, NDWI, Landcover</li>
+<li>NDVI, NDWI Landcover</li>
+<li>NIR, NDWI, NDBI</li>
+<li>NDBI, NDWI, Landcover</li>
+<li>NIR, NDWI, Landcover</li>
+</ul>
+
+So this study created 18 models - 2 models architectures and 9 band compositions.
  
-The first approach is in UNet_implemented folder, and the second one is in UNet_with_Resnet_backbone folder.
+The first approach is in [UNet_implemented](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/tree/main/Marta's-approach/UNet_implemented) folder, and the second one is in [UNet_with_Resnet_backbone](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/tree/main/Marta's-approach/UNet_with_Resnet_backbone) folder.
 The second one gave better results, so it will be explained here.
 
 
 <h2>Transfer learning approach - U-Net with Resnet50 architecture </h2>
- 
-This approach is in UNet_with_Resnet_backbone folder, and here is explanation of what exactly is done in each file that you can find there.
 
 <h3> 0b_create_image_chips_save_numpy_array_github.ipynb </h3> 
-This file imports sattelite image, that have 10 bands in total - B, G, R, NIR, SWIR, NDVI, NDBI, NDWI, VARI, land_cover, and park raster. It creates image chips (with patchify library) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 95-80%) to get balanced training data. 
+
+[0b_create_image_chips_save_numpy_array_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/0b_create_image_chips_save_numpy_array_github.ipynb) file imports sattelite image, that have 8 bands in total - B, G, R, NIR, NDVI, NDBI, NDWI, land_cover, and park raster. It creates image chips with [Patchify library](https://pypi.org/project/patchify/) and saves them as numpy arrays to google drive. It also remove chips with high proportion of backgrounds (over 90%) to get balanced training data. 
  
 Input - sattelite image and raster with parks:
 
