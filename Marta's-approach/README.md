@@ -5,7 +5,7 @@
 The workflow of this project is:
 <ul>
 <li>data gathering and pre-processing - getting Sentinel satellite images from Earthexplorer, and parks data. Using QGIS to prepare, e.g calculate indices clipping satellite images to city extent, rasterizing park data. </li>
-<li>data preparation and augmentation - importing satellite images and corresponding masks (the ground truth for where are parks and where are not), creating chips and balancing data. Balancing was done by deleting chips that have fewer park pixels than the given threshold (e.g. less than 5-20%) Then data augmentation to expand the image dataset. </li>
+<li>data preparation and augmentation - importing satellite images and corresponding masks (the ground truth for where are parks and where are not), creating chips and balancing data. Balancing was done by deleting chips that have fewer park pixels than the given threshold (less than 10%) Then data augmentation to expand the image dataset. </li>
 <li>model training - different models and parameters (e.g. threshold of deleting chips, the stride of the chips, different bands combination) were tested. </li>
 <li>evaluation - few cities were left out of the training process to be used as an external validation to access the model accuracy on unseen data.</li>
 </ul>
@@ -13,7 +13,7 @@ The workflow of this project is:
 I've tried two approaches to solve this:
 <ul>
 <li> writing U-Net model from scratch. The advantages here are: the model is more understandable and customizable - one can easily add another dropout layer, or change its proportion. Sadly the results are mediocre. </li>
-<li> using transfer learning approach, and using pre-trained U-Net with Resnet backbone. This approach is closer to a Black-box approach - one can't edit the model parameters, but it has a backbone that has weights trained on the 2012 ILSVRC ImageNet dataset. The limitation is here that only 3 bands can be used. Pre-trained model was implemented from [Segmentations Models](https://github.com/qubvel/segmentation_models) library.
+<li> using transfer learning approach, and using pre-trained U-Net with Resnet backbone. This approach is closer to a Black-box approach - one can't edit the model parameters, but it has a backbone that has weights trained on the 2012 ILSVRC ImageNet dataset. The limitation is here that only 3 bands can be used.
 </ul>
 
 So those were the the model archcitectures that this study evaluated.
@@ -53,10 +53,9 @@ Output - image patches (saved as numpy arrays):
 
 
 <h3> 1b_UNet_train_model_github.ipynb </h3>
-(still in progress)
-This file is training the prediction model. It starts with reading image and mask chips from different cities - currently Amsterdam, Dublin, Ghent, Manchester, Seattle and San Francisco with image chips that have no less then 10% of parks. This image chips have 3 bands - Ndvi, Landcover, Ndwi. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
+This file is training the prediction model. It starts with reading image and mask chips from 10 different cities from one of the 9 three-band compositions. Cities that were included in the training process are Amsterdam, Buffalo, Dhaka, Dublin, Ghent, London, Manchester, Philadelphia, Seattle, Vancouver. This image chips have 3 bands - Ndvi, Landcover, Ndwi. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
 
-Next step is training the model. For now the best accuracy was achieved using ResNet50 backbone, 50 epochs, and including chips that have no less then 10% of park. 
+Next step is training the model. Pre-trained model was implemented from [Segmentations Models](https://github.com/qubvel/segmentation_models) library. For now the best accuracy was achieved using ResNet50 backbone, 50 epochs, and including chips that have no less then 10% of park. 
 
 ![image](https://user-images.githubusercontent.com/79871387/172175542-9455bb59-2ecb-4bc7-8b08-5e6e97f375b9.png)
 
