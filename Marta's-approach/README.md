@@ -72,7 +72,7 @@ Next step is training the model. Pre-trained model was implemented from [Segment
 <h2>Results</h2>
 
 <h3> Training process </h3>
-Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly.
+Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly..
 
 ![Obraz1](https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png)
 
