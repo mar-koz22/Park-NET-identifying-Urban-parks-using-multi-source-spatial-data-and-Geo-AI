@@ -1,6 +1,6 @@
 <h1> PPark-NET: Identifying Public Urban Green Spaces Using Multi-Source Spatial Data and Convolutional Networks </h1>
  
-<b>The aim of this project is to analyse to what extent can a reproducible CNN model that predicts urban greenspace based on open source data be created.</b> 
+<b>The aim of this project is to analyse to what extent can a reproducible CNN model that predicts public urban green spaces (PUGSs) based on open source data be created.</b> 
  
 The workflow of this project is:
 <ul>
@@ -89,3 +89,20 @@ Comparison of PUGSs prediction in Washington. Left is ground truth, middle the b
 After evaluating all models, the best model was chosen - Red-NIR-NDVI, U-Net with a ResNet34 encoder. This model was used to create new PUGSs datasets for 3 external cities. Here is presented Washington:
 
 ![image](https://user-images.githubusercontent.com/79871387/175574651-ff5b2dd6-6721-4688-a1d6-8d9fcfef7120.png)
+
+When looking up close at the prediction there are a few groups of misclassifications when comparing prediction with ground truth data for Washington:
+1. Small PUGSs in high density neighbourhoods. Figure shows comparison of true colour Washington image (left) and PUGSs prediction on top of ground truth data (right). These examples show that when there are small PUGSs in a dense neighbourhood model sometimes fails or predicts just parts of the PUGS. Left true colour Washington image Right satellite image, on top of that PUGSs predictions as green,
+and ground truth PUGSs symbolised with cross filling.
+
+![image](https://user-images.githubusercontent.com/79871387/175575272-77a344bf-fe69-47b5-a760-56a4c23e5fc2.png)
+
+2. Some parts of PUGSs that are build-ups not green space
+Figure shows example when part of a PUGS is some infrastructure, building - build-up area, not green. Then created model will likely predict that those parts are background not PUGS. Left true colour Washington image Right satellite image, on top of that PUGSs predictions as green,
+and ground truth PUGSs symbolised with cross filling.
+
+![image](https://user-images.githubusercontent.com/79871387/175575378-1759d24b-3f46-44bd-adb2-5fbaefa4782d.png)
+
+3. Green spaces that were not in the ground truth data, that are probably not public. Figure shows example of predicted area that is probably a golf club but was predicted as a PUGS. Left true colour Washington image Right satellite image, on top of that PUGSs predictions as green,
+and ground truth PUGSs symbolised with cross filling.
+
+![image](https://user-images.githubusercontent.com/79871387/175575478-917e500f-03df-4b2a-9898-aa54e54f15b9.png)
