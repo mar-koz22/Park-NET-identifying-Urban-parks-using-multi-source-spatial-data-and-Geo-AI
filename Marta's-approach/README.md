@@ -50,9 +50,9 @@ Output - image patches (saved as numpy arrays):
 
 <h2>Transfer learning approach - U-Net with ResNet34 architecture </h2>
 
-<h3> 1b_UNet_train_model_github.ipynb </h3>
+<h3> 1a_UNet_resnet34_encoder.ipynb </h3>
 
-[1b_UNet_train_model_github.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/1b_UNet_parks_with_a_backbone_github.ipynb) file is training the prediction model. It starts with reading image and mask chips from 10 different cities from one of the 9 three-band compositions. Cities that were included in the training process are Amsterdam, Buffalo, Dhaka, Dublin, Ghent, London, Manchester, Philadelphia, Seattle, Vancouver. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
+[1a_UNet_resnet34_encoder.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/1a_UNet_resnet34_encoder.ipynb) file is training the prediction model. It starts with reading image and mask chips from 10 different cities from one of the 9 three-band compositions. Cities that were included in the training process are Amsterdam, Buffalo, Dhaka, Dublin, Ghent, London, Manchester, Philadelphia, Seattle, Vancouver. After dividing into train and test, and preprocessing data to fit the backbone architecture, data augumentation using ImageDataGenerator library is done to make the dataset more diverse.
 
 Data augumentation examples:
 
@@ -61,9 +61,9 @@ Data augumentation examples:
 Next step is training the model. Pre-trained model was implemented from [Segmentations Models](https://github.com/qubvel/segmentation_models) library.
 
 
-<h3> 2b_new_city_external_validation_github.ipynb </h3>
+<h3> 2a_evaluation_UNet_resnet34_encoder.ipynb </h3>
 
-[2b_test_on_new_city_backbone_github](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/2b_test_on_new_city_backbone_github.ipynb) is checking the accuracy on external data. Two cities were used for the external validation - Washington and Tel Aviv. Sattelite image and mask are loaded, and chips are created. Public urban green spaces are predicted.
+[2a_evaluation_UNet_resnet34_encoder.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/2a_evaluation_UNet_resnet34_encoder.ipynb) is checking the accuracy on external data. Two cities were used for the external validation - Washington and Tel Aviv. Sattelite image and mask are loaded, and chips are created. Public urban green spaces are predicted.
 
 <h3> 3_produce_image_output.ipynb </h3>
 
