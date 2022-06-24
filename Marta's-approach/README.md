@@ -85,7 +85,7 @@ Comparison of PUGSs prediction in Washington. Left is ground truth, middle the b
 
 ![image](https://user-images.githubusercontent.com/79871387/175574332-c603340f-5322-4ad8-98c6-b7249a7d53f5.png)
 
-<h3> Prediction for Washington </h3>
+<h3> Prediction for Washington using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
 After evaluating all models, the best model was chosen - Red-NIR-NDVI, U-Net with a ResNet34 encoder. This model was used to create new PUGSs datasets for 3 external cities. Here is presented Washington. Right - ground truth PUGS data for Washington, left predicted PUGS data for Washington. PUGS are green, background is white:
 
 ![image](https://user-images.githubusercontent.com/79871387/175574651-ff5b2dd6-6721-4688-a1d6-8d9fcfef7120.png)
@@ -107,11 +107,11 @@ and ground truth PUGSs symbolised with cross filling.
 
 ![image](https://user-images.githubusercontent.com/79871387/175575478-917e500f-03df-4b2a-9898-aa54e54f15b9.png)
 
-<h3> Prediction for Tel Aviv </h3>
+<h3> Prediction for Tel Aviv using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
 
 ![image](https://user-images.githubusercontent.com/79871387/175576652-849a43f9-9583-4071-aaf1-62319871e695.png)
 
 
-<h3> Prediction for Kampala </h3>
+<h3> Prediction for Kampala using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
 
 ![image](https://user-images.githubusercontent.com/79871387/175576505-af08d5ec-45de-4742-a062-ef4c057880df.png)
