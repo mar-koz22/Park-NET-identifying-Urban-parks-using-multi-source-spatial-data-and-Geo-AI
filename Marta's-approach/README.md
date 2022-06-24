@@ -76,4 +76,16 @@ Transfer learning is helping with making the training process converge faster. F
 
 <img src="https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png" width="650">
 
-All results were calculated based on two external cities - Washington and Tel Aviv.
+<h3> External validation accuracy </h3>
+All the presented results are based on two external cities – Washington and Tel Aviv. Both of those cities weren’t used for training and testing of any of the models. The IoU, and F1 of the semantic segmentation done by the U-Net with ResNet34 backbone for each of the 9 three-band compositions calculated based on 2 external validation cities are presented in table.
+
+![image](https://user-images.githubusercontent.com/79871387/175573898-f4693e3c-a88d-411d-b84a-d26bca3ea114.png)
+
+Comparison of PUGSs prediction in Washington. Left is ground truth, middle the best U-Net with ResNet34 encoder based on Red-NIR-NDVI, right best model from scratch, so Red-NDWI-Landcover. PUGS are white, and background is black
+
+![image](https://user-images.githubusercontent.com/79871387/175574332-c603340f-5322-4ad8-98c6-b7249a7d53f5.png)
+
+<h3> Prediction for whole Washington </h3>
+After evaluating all models, the best model was chosen - Red-NIR-NDVI, U-Net with a ResNet34 encoder. This model was used to create new PUGSs datasets for 3 external cities. Here is presented Washington:
+
+![image](https://user-images.githubusercontent.com/79871387/175574651-ff5b2dd6-6721-4688-a1d6-8d9fcfef7120.png)
