@@ -1,4 +1,4 @@
-<h1> PPark-NET: Identifying Public Urban Green Spaces Using Multi-Source Spatial Data and Convolutional Networks </h1>
+<h1> Park-NET: Identifying Public Urban Green Spaces Using Multi-Source Spatial Data and Convolutional Networks </h1>
  
 <b>The aim of this project is to analyse to what extent can a reproducible CNN model that predicts public urban green spaces (PUGSs) based on open source data be created.</b> 
  
