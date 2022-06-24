@@ -128,3 +128,5 @@ Coding:
 <ul>
 <li>Using Convolutional Networks and Satellite Imagery to Identify Patterns in Urban Environments at a Large Scale by Albert, A., Kaur, J., & Gonzalez, M. (2017) - https://arxiv.org/abs/1704.02965 </li>
 <li>Mapping Urban Green Spaces at the Metropolitan Level Using Very High Resolution Satellite Imagery and Deep Learning Techniques for Semantic Segmentation by Huerta, R. E., Yépez, F. D., Lozano-García, D. F., Guerra Cobián, V. H., Ferriño Fierro, A. L., de León Gómez, H., Cavazos González, R. A., & Vargas-Martínez, A. (2021) - https://www.mdpi.com/2072-4292/13/11/2031 </li>
+ <li>U-Net: Convolutional Networks for Biomedical Image Segmentation by Ronneberger, O., Fischer, P., & Brox, T. (2015) - https://arxiv.org/abs/1505.04597
+
