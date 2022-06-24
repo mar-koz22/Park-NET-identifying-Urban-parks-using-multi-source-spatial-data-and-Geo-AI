@@ -31,10 +31,10 @@ Because litearature suggest this approach, and the pre-trained can take 3 bands 
 <li>NIR, NDWI, Landcover</li>
 </ul>
 
-So this study created 18 models - 2 models architectures and 9 band compositions.
- 
+The full methodological workflow:
+![project workflow (2)](https://user-images.githubusercontent.com/79871387/175558186-2383e3d5-1c83-4bb3-ace9-f06686488143.jpg)
 
-<h2>Model setup </h2>
+This process was mainly done in Google Clab Pro, and scripts are descibed here:
 
 <h3> 0_create_image_chips_save_numpy_array_github.ipynb </h3> 
 
@@ -66,3 +66,7 @@ Next step is training the model. Pre-trained model was implemented from [Segment
 [2b_test_on_new_city_backbone_github](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/UNet_with_Resnet_backbone/2b_test_on_new_city_backbone_github.ipynb) is checking the accuracy on external data. Two cities were used for the external validation - Washington and Tel Aviv. Sattelite image and mask are loaded, and chips are created. Public urban green spaces are predicted.
 
 <h3> 3_produce_image_output.ipynb </h3>
+
+[3_produce_image_output.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/3_produce_image_output.ipynb) produces tiff image with public urban green spaces predictions based on the chosen model.
+
+<h2>Results</h2>
