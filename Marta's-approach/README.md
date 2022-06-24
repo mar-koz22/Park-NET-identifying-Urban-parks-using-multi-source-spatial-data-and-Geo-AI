@@ -70,3 +70,10 @@ Next step is training the model. Pre-trained model was implemented from [Segment
 [3_produce_image_output.ipynb](https://github.com/mar-koz22/Park-NET-identifying-Urban-parks-using-multi-source-spatial-data-and-Geo-AI/blob/main/Marta's-approach/3_produce_image_output.ipynb) produces tiff image with public urban green spaces predictions based on the chosen model.
 
 <h2>Results</h2>
+
+<h3> Training process </h3>
+Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly.
+
+![Obraz1](https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png)
+
+All results were calculated based on two external cities - Washington and Tel Aviv.
