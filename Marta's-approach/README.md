@@ -115,3 +115,16 @@ and ground truth PUGSs symbolised with cross filling.
 <h3> Prediction for Kampala using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
 
 ![image](https://user-images.githubusercontent.com/79871387/175576505-af08d5ec-45de-4742-a062-ef4c057880df.png)
+
+<h4> Reference </h4>
+Coding:
+<ul>
+<li>Segmentation Models library - https://segmentation-models.readthedocs.io/en/latest/index.html & https://github.com/qubvel/segmentation_models </li>
+<li>Patchify library - https://pypi.org/project/patchify/ & https://github.com/dovahcrow/patchify.py </li>
+<li>https://github.com/bnsreenu/python_for_microscopists </li>
+<li>https://github.com/jordancaraballo/nga-deep-learning </li>
+</ul>
+ Main literature:
+<ul>
+<li>Using Convolutional Networks and Satellite Imagery to Identify Patterns in Urban Environments at a Large Scale by Albert, A., Kaur, J., & Gonzalez, M. (2017) - https://arxiv.org/abs/1704.02965 </li>
+<li>Mapping Urban Green Spaces at the Metropolitan Level Using Very High Resolution Satellite Imagery and Deep Learning Techniques for Semantic Segmentation by Huerta, R. E., Yépez, F. D., Lozano-García, D. F., Guerra Cobián, V. H., Ferriño Fierro, A. L., de León Gómez, H., Cavazos González, R. A., & Vargas-Martínez, A. (2021) - https://www.mdpi.com/2072-4292/13/11/2031 </li>
