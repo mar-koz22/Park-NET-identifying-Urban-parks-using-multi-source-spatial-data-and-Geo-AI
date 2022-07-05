@@ -32,7 +32,8 @@ Because litearature suggest this approach, and the pre-trained can take 3 bands 
 </ul>
 
 The full methodological workflow:
-<img src="https://user-images.githubusercontent.com/79871387/175558186-2383e3d5-1c83-4bb3-ace9-f06686488143.jpg">
+![project workflow (7)](https://user-images.githubusercontent.com/79871387/177307484-dc29e254-4f4d-4323-acb1-6bb34bd5fe00.jpg)
+
 
 This process was mainly done in Google Clab Pro, and scripts are descibed here:
 
@@ -71,24 +72,50 @@ Next step is training the model. Pre-trained model was implemented from [Segment
 
 <h2>Results</h2>
 
+<h3>Training, validation results and choosing the best model</h3>
+
+Training and validation results are presented for all the created models. Training set was 80% of the input data, and validation was 20%. There were 18 models created in total, because there were 9 different three-band compositions, and two different model architectures – baseline U-Net model from scratch and U-Net model with a pre-trained ResNet34 encoder. All the models were trained on 10 cities mentioned in Table 2. The aim was to find the best combination of model architecture and band composition based on validation metrics.
+
+First for baseline model:
+
+![image](https://user-images.githubusercontent.com/79871387/177301627-ede99336-ae79-4356-99cf-6e570c45f1ea.png)
+
+Then for model with ResNet34 backbone:
+
+![image](https://user-images.githubusercontent.com/79871387/177301942-08e43fae-b013-452f-a542-2fb7415c6798.png)
+
+For baseline U-Net from scratch average validation IoU was 0,7259, average validation F1 score was 0,8403. For U-Net with ResNet34 encoder it was 0,8681 and 0,9274, which is a 12% rise for validation IoU and 8% for validation F1 score. This visible rise shows that U-Net with a ResNet34 backbone achieved better performance than the baseline model, and that transfer learning is a very good approach. The best model should be chosen from the models with a pre-trained encoder.
+
+
+NIR-NDWI-NDBI composition with U-Net with ResNet34 encoder architecture achieved the best average validation score among all the models and was chosen as the best model to be used later for evaluation and predictions. It had validation IoU of 0,8770, and validation F1 score of 0,9326.
+
 <h3> Training process </h3>
-Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly..
+Transfer learning is helping with making the training process converge faster. For U-Net with ResNet34 encoder the learning process is also less bumpy then for model from scratch, the loss and IoU are changing more smoothly.
 
 <img src="https://user-images.githubusercontent.com/79871387/175571701-584615aa-e241-4149-b7fe-a4c74cd9bfbf.png" width="650">
 
-<h3> External validation accuracy </h3>
-All the presented results are based on two external cities – Washington and Tel Aviv. Both of those cities weren’t used for training and testing of any of the models. The IoU, and F1 of the semantic segmentation done by the U-Net with ResNet34 backbone for each of the 9 three-band compositions calculated based on 2 external validation cities are presented in table.
+<h2> External validation accuracy </h2>
+External evaluation was based on test set that consisted of two external cities – Washington and Tel Aviv. Both of those cities were not a part of testing or validation process. Test performance of the chosen model, so the NIR-NDWI-NDBI U-Net with a ResNet34 encoder is:
 
-![image](https://user-images.githubusercontent.com/79871387/175573898-f4693e3c-a88d-411d-b84a-d26bca3ea114.png)
+![image](https://user-images.githubusercontent.com/79871387/177306582-c35ceba2-fe11-48d0-9e96-ce3485fad205.png)
 
-Comparison of PUGSs prediction in Washington. Left is ground truth, middle the best U-Net with ResNet34 encoder based on Red-NIR-NDVI, right best model from scratch, so Red-NDWI-Landcover. PUGS are white, and background is black
+The best model achieved an average test IoU of 0,5610, and average test F1 score of 0,64515 across two external cities. Washington had an average of 0,6622 test metrics, and Tel Aviv had 0,544, so the model performed visibly better on Washington then on Tel Aviv.
 
-![image](https://user-images.githubusercontent.com/79871387/175574332-c603340f-5322-4ad8-98c6-b7249a7d53f5.png)
+<h3> Prediction for Washington using NIR-NDWI-NDBI U-Net with a ResNet34 encoder model</h3>
 
-<h3> Prediction for Washington using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
-After evaluating all models, the best model was chosen - Red-NIR-NDVI, U-Net with a ResNet34 encoder. This model was used to create new PUGSs datasets for 3 external cities. Here is presented Washington. Right - ground truth PUGS data for Washington, left predicted PUGS data for Washington. PUGS are green, background is white:
+Differences between validation metrics of baseline models from scratch and models with a backbone were visible, but when we compare their prediction on external dataset this difference in performance is even more apparent. Figure belowe illustrates differences in prediction of Washington PUGSs between chosen NIR-NDWI-NDBI U-Net with a Resnet34 encoder, and model from scratch that achieved the best validation metrics, so NDVI-NDWI-Landcover baseline model. It is evident that the transfer learning model is performing a lot better on an external test set.
+
+![image](https://user-images.githubusercontent.com/79871387/177306916-9503f2bf-8d95-471e-9bf6-c416d1b36565.png)
+
+
+The best, chosen model, so NIR-NDWI-NDBI U-Net with a Resnet34 encoder was used to create new PUGSs datasets for 3 external cities – Washington, Tel Aviv, and Kampala. 
+
+Here is presented Washington. Right - ground truth PUGS data for Washington, left predicted PUGS data for Washington. PUGS are green, background is white:
 
 ![image](https://user-images.githubusercontent.com/79871387/175574651-ff5b2dd6-6721-4688-a1d6-8d9fcfef7120.png)
+
+Looking at the predictions for Washington there are some parts, like the big green space in the north, and longitudinal green space in the middle, that were predicted good, but there are also some misclassifications that should be analysed up close. 
+
 
 When looking up close at the prediction there are a few groups of misclassifications when comparing prediction with ground truth data for Washington:
 1. Small PUGSs in high density neighbourhoods. Figure shows comparison of true colour Washington image (left) and PUGSs prediction on top of ground truth data (right). These examples show that when there are small PUGSs in a dense neighbourhood model sometimes fails or predicts just parts of the PUGS. Left true colour Washington image Right satellite image, on top of that PUGSs predictions as green,
@@ -107,12 +134,12 @@ and ground truth PUGSs symbolised with cross filling.
 
 ![image](https://user-images.githubusercontent.com/79871387/175575478-917e500f-03df-4b2a-9898-aa54e54f15b9.png)
 
-<h3> Prediction for Tel Aviv using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
+<h3> Prediction for Tel Aviv using NIR-NDWI-NDBI U-Net with a Resnet34 encoder model</h3>
 
 ![image](https://user-images.githubusercontent.com/79871387/175576652-849a43f9-9583-4071-aaf1-62319871e695.png)
 
 
-<h3> Prediction for Kampala using Red-NIR-NDVI U-Net with a ResNet34 encoder model</h3>
+<h3> Prediction for Kampala using NIR-NDWI-NDBI U-Net with a Resnet34 encoder model</h3>
 
 ![image](https://user-images.githubusercontent.com/79871387/175576505-af08d5ec-45de-4742-a062-ef4c057880df.png)
 
