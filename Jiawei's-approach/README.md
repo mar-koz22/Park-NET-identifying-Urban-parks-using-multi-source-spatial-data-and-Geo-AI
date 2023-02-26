@@ -8,6 +8,8 @@ The main workflow of this project is,
 
 * Third, model validation and prediction on external cities. In this step, models with the best performance would be used to validate on Washington D.C. and Tel Aviv, and predict on Kampala.
 
+Please go to [paper](https://studenttheses.uu.nl/bitstream/handle/20.500.12932/42573/Automatically%20Mapping%20Urban%20Green%20Space%20Using%20Sentinel-2%20Imagery%20and%20Deep%20Learning%20Methods%20in%20Multiple%20Cities%20Worldwide%20A%20Convolutional%20Neural%20Network%20Approach.pdf?sequence=1) for more information.
+
 ## Data preparation
 Satellite images were generated from Sentinel-2, downloaded at [EarthExplorer](https://earthexplorer.usgs.gov/), with spectral information of blue (B2), green (B3), red (B4), near-infrared (NIR, B8). Together with these bands, [NDVI](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index), [NDBI](https://pro.arcgis.com/en/pro-app/2.8/arcpy/spatial-analyst/ndbi.htm), [NDWI](https://en.wikipedia.org/wiki/Normalized_difference_water_index) were also calculated and put into training. Additionally, we got landcover data and added this as another layer.
 
